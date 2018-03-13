@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>gaewynn</Authors>
+    <Company>Sonata</Company>
+    <Description>Sonata.Web</Description>
+    <Copyright>Copyright @ 2018 Sonata</Copyright>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Gaewynn/Sonata.Web</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/gaewynn/Sonata.Web/master/NuGet/sonata-web.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Gaewynn/Sonata.Web</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>gaewynn sonata web</PackageTags>
+    <NeutralLanguage>English (United States)</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
+    <PackageReference Include="Sonata.Diagnostics" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Sonata.Web</id>
+    <version>$version$</version>
+    <title>Sonata.Web</title>
+    <authors>gaewynn</authors>
+    <owners>Sonata</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/Gaewynn/Sonata.Web</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/gaewynn/Sonata.Web/master/NuGet/sonata-web.png</iconUrl>
+    <description>Sonata.Web</description>
+    <summary></summary>
+    <copyright>Copyright @ 2018 Sonata</copyright>
+	<tags>gaewynn sonata web</tags>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Sonata.Diagnostics" version="1.0.0" />
+      <dependency id="Microsoft.AspNetCore.Mvc" version="2.0.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\Sonata.Web\bin\$configuration$\netstandard2.0\Sonata.Web.dll" target="Sonata.Web.dll" />
+  </files>
+</package>

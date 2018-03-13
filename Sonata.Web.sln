@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonata.Web", "Sonata.Web\Sonata.Web.csproj", "{064A3817-C027-4A46-93D3-4C26B7574553}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{064A3817-C027-4A46-93D3-4C26B7574553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064A3817-C027-4A46-93D3-4C26B7574553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064A3817-C027-4A46-93D3-4C26B7574553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064A3817-C027-4A46-93D3-4C26B7574553}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCF3C8C1-4205-4F02-86B6-66C9F5E0E76E}
+	EndGlobalSection
+EndGlobal
