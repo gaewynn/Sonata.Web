@@ -2,8 +2,8 @@
 //	TODO
 #endregion
 
+using Sonata.Diagnostics.Logging;
 using System.Collections.Generic;
-using Sonata.Diagnostics.Logs;
 
 namespace Sonata.Web.Services
 {
@@ -17,7 +17,7 @@ namespace Sonata.Web.Services
 		/// <summary>
 		/// 
 		/// </summary>
-		public List<Log> Logs { get; set; }
+		public List<ILog4NetProperties> Logs { get; set; }
 
 		/// <summary>
 		/// 
@@ -33,7 +33,7 @@ namespace Sonata.Web.Services
 		/// </summary>
 		public ResponseParams()
 		{
-			Logs = new List<Log>();
+			Logs = new List<ILog4NetProperties>();
 		}
 
 		#endregion

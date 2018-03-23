@@ -2,12 +2,12 @@
 //	The Sonata.Web.Http namespace contains classes of HTTP attributes.
 #endregion
 
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Sonata.Web.Http
 {
