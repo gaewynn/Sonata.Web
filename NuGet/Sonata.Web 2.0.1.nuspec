@@ -16,7 +16,7 @@
 	<tags>gaewynn sonata web</tags>
     <language>en-US</language>
     <dependencies>
-      <dependency id="Sonata.Diagnostics" version="1.0.0" />
+      <dependency id="Sonata.Diagnostics" version="2.0.4" />
       <dependency id="Microsoft.AspNetCore.Mvc" version="2.0.3" />
     </dependencies>
   </metadata>
