@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sonata.Web", "Sonata.Web\Sonata.Web.csproj", "{064A3817-C027-4A46-93D3-4C26B7574553}"
 EndProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{63E7BE27
 	ProjectSection(SolutionItems) = preProject
 		NuGet\Build.bat = NuGet\Build.bat
 		NuGet\sonata-web.png = NuGet\sonata-web.png
-		NuGet\Sonata.Web 3.0.0.nuspec = NuGet\Sonata.Web 3.0.0.nuspec
+		NuGet\Sonata.Web 3.0.1.nuspec = NuGet\Sonata.Web 3.0.1.nuspec
 	EndProjectSection
 EndProject
 Global
