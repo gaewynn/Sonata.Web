@@ -4,7 +4,13 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.Extensions.Primitives;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Sonata.Web.Extensions
 {
@@ -42,6 +48,57 @@ namespace Sonata.Web.Extensions
             }
 
             return httpRequest.Headers["Authorization"].ToString().Replace("Bearer", String.Empty).Trim();
+        }
+
+        public static string GetClaimFromBearerToken(this HttpRequest instance, string claimsType)
+        {
+            if (claimsType == null)
+            {
+                throw new ArgumentNullException(nameof(claimsType));
+            }
+
+            var encodedToken = instance.GetBearer();
+            if (encodedToken == null)
+            {
+                return null;
+            }
+
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            if (!jwtSecurityTokenHandler.CanReadToken(encodedToken))
+            {
+                return null;
+            }
+
+            var decodedToken = new JwtSecurityToken(encodedToken);
+            var claimsValue = decodedToken.Claims.Where(c => c.Type == claimsType).FirstOrDefault()?.Value;
+
+            return claimsValue;
+        }
+
+        public static async Task<string> ReadBodyAsStringAsync(this HttpRequest instance)
+        {
+            instance.EnableRewind();
+
+            var buffer = new byte[Convert.ToInt32(instance.ContentLength)];
+            await instance.Body.ReadAsync(buffer, 0, buffer.Length);
+            var bodyAsText = Encoding.UTF8.GetString(buffer);
+
+            instance.Body.Seek(0, SeekOrigin.Begin);
+            instance.Body.Position = 0;
+
+            return bodyAsText;
+        }
+
+        public static string GetFirstOrDefaultHeaderValue(this HttpRequest instance, string headerKey)
+        {
+            if (instance.Headers == null
+                || !instance.Headers.ContainsKey(headerKey)
+                || (StringValues?)instance.Headers[headerKey] == (StringValues?)null)
+            {
+                return null;
+            }
+
+            return instance.Headers[headerKey].FirstOrDefault();
         }
     }
 }

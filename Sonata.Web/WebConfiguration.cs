@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Sonata.Web
 {
-	internal class WebConfiguration
+    internal class WebConfiguration
 	{
 		#region Constants
 
