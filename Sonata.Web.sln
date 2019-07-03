@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{63E7BE27
 	ProjectSection(SolutionItems) = preProject
 		NuGet\Build.bat = NuGet\Build.bat
 		NuGet\sonata-web.png = NuGet\sonata-web.png
-		NuGet\Sonata.Web 3.1.0.nuspec = NuGet\Sonata.Web 3.1.0.nuspec
+		NuGet\Sonata.Web 3.1.1.nuspec = NuGet\Sonata.Web 3.1.1.nuspec
 	EndProjectSection
 EndProject
 Global
