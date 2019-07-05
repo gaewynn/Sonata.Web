@@ -71,7 +71,7 @@ namespace Sonata.Web.Middlewares
                         httpContext.Response.Body = responseBody;
                         await _next(httpContext);
 
-                        var response = _options.SerializeResponseAsync(httpContext);
+                        var response = await _options.SerializeResponseAsync(httpContext);
                         await _options.OnLogResponseAsync?.Invoke(httpContext, serializedRequest);
 
                         await responseBody.CopyToAsync(responseBodyStream);
@@ -162,7 +162,9 @@ namespace Sonata.Web.Middlewares
             }
 
             var requestBody = await httpContext.Request.ReadBodyAsStringAsync();
-            var shortenedRequestBody = requestBody.Substring(0, Math.Min(10000, requestBody.Length));
+            var shortenedRequestBody = requestBody != null
+                ? requestBody.Substring(0, Math.Min(10000, requestBody.Length))
+                : string.Empty;
 
             return $"{httpContext.Request.Method} {httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.Path}{httpContext.Request.QueryString} [Body: {shortenedRequestBody}]";
         }
@@ -180,7 +182,9 @@ namespace Sonata.Web.Middlewares
             }
 
             var responseBody = await httpContext.Response.ReadBodyAsStringAsync();
-            var shortenedResponseBody = responseBody.Substring(0, Math.Min(10000, responseBody.Length));
+            var shortenedResponseBody = responseBody != null
+                ? responseBody.Substring(0, Math.Min(10000, responseBody.Length))
+                : string.Empty;
 
             return $"{httpContext.Response.StatusCode} {httpContext.Request.Method} {httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.Path}{httpContext.Request.QueryString} [Body: {shortenedResponseBody}]";
         }

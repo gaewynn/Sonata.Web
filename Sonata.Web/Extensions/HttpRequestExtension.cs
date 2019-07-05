@@ -77,6 +77,16 @@ namespace Sonata.Web.Extensions
 
         public static async Task<string> ReadBodyAsStringAsync(this HttpRequest instance)
         {
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
+            if (instance.ContentLength == null)
+            {
+                return null;
+            }
+
             instance.EnableRewind();
 
             var buffer = new byte[Convert.ToInt32(instance.ContentLength)];

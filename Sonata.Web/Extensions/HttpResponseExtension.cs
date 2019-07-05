@@ -18,6 +18,11 @@ namespace Sonata.Web.Extensions
                 throw new ArgumentNullException(nameof(instance));
             }
 
+            if (instance.ContentLength == null)
+            {
+                return null;
+            }
+
             instance.Body.Position = 0;
             instance.Body.Seek(0, SeekOrigin.Begin);
 
