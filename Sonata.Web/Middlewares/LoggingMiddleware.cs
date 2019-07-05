@@ -8,7 +8,7 @@ using Sonata.Web.Extensions;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http.Internal;
 namespace Sonata.Web.Middlewares
 {
     public static class LoggingMiddlewareExtensions
@@ -71,8 +71,8 @@ namespace Sonata.Web.Middlewares
                         httpContext.Response.Body = responseBody;
                         await _next(httpContext);
 
-                        var response = await _options.SerializeResponseAsync(httpContext);
-                        await _options.OnLogResponseAsync?.Invoke(httpContext, serializedRequest);
+                        var serializedResponse = await _options.SerializeResponseAsync(httpContext);
+                        await _options.OnLogResponseAsync?.Invoke(httpContext, serializedResponse);
 
                         await responseBody.CopyToAsync(responseBodyStream);
                     }

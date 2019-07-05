@@ -82,19 +82,20 @@ namespace Sonata.Web.Extensions
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            if (instance.ContentLength == null)
+            if (instance.Body.CanSeek)
             {
-                return null;
+                instance.Body.Position = 0;
+                instance.Body.Seek(0, SeekOrigin.Begin);
             }
 
-            instance.EnableRewind();
+            var streamReader = new StreamReader(instance.Body);
+            var bodyAsText = await streamReader.ReadToEndAsync();
 
-            var buffer = new byte[Convert.ToInt32(instance.ContentLength)];
-            await instance.Body.ReadAsync(buffer, 0, buffer.Length);
-            var bodyAsText = Encoding.UTF8.GetString(buffer);
-
-            instance.Body.Seek(0, SeekOrigin.Begin);
-            instance.Body.Position = 0;
+            if (instance.Body.CanSeek)
+            {
+                instance.Body.Position = 0;
+                instance.Body.Seek(0, SeekOrigin.Begin);
+            }
 
             return bodyAsText;
         }
