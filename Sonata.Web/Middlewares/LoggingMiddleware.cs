@@ -62,7 +62,7 @@ namespace Sonata.Web.Middlewares
             {
                 var serializedRequest = await _options.SerializeRequestAsync(httpContext);
                 await _options.OnLogRequestAsync?.Invoke(httpContext, serializedRequest);
-
+                
                 var responseBodyStream = httpContext?.Response?.Body;
                 if (responseBodyStream != null)
                 {
@@ -70,10 +70,9 @@ namespace Sonata.Web.Middlewares
                     {
                         httpContext.Response.Body = responseBody;
                         await _next(httpContext);
-
+                
                         var serializedResponse = await _options.SerializeResponseAsync(httpContext);
                         await _options.OnLogResponseAsync?.Invoke(httpContext, serializedResponse);
-
                         await responseBody.CopyToAsync(responseBodyStream);
                     }
                 }

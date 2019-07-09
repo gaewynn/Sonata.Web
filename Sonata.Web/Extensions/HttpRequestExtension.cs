@@ -9,7 +9,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sonata.Web.Extensions
@@ -82,20 +81,16 @@ namespace Sonata.Web.Extensions
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            if (instance.Body.CanSeek)
-            {
-                instance.Body.Position = 0;
-                instance.Body.Seek(0, SeekOrigin.Begin);
-            }
+            instance.EnableRewind();
+            instance.Body.Position = 0;
+            instance.Body.Seek(0, SeekOrigin.Begin);
 
             var streamReader = new StreamReader(instance.Body);
             var bodyAsText = await streamReader.ReadToEndAsync();
 
-            if (instance.Body.CanSeek)
-            {
-                instance.Body.Position = 0;
-                instance.Body.Seek(0, SeekOrigin.Begin);
-            }
+            instance.EnableRewind();
+            instance.Body.Position = 0;
+            instance.Body.Seek(0, SeekOrigin.Begin);
 
             return bodyAsText;
         }
