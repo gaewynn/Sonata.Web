@@ -2,8 +2,10 @@
 //	TODO
 #endregion
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,6 +20,9 @@ namespace Sonata.Web.Extensions
         /// Creates an <see cref="IActionResult"/>  from a <see cref="HttpResponseMessage"/>.
         /// </summary>
         /// <param name="message">The <see cref="HttpResponseMessage"/> to convert.</param>
+        /// <param name="location">The location of the created resource. This location is used only when a <see cref="HttpStatusCode.Created"/> is handled.</param>
+        /// <param name="authenticationSchemes">The authentication schemes to challenge. This location is used only when a <see cref="HttpStatusCode.Forbidden"/> is handled.</param>
+        /// <param name="authenticationProperties"><see cref="AuthenticationProperties"/> used to perform the authentication challenge. This location is used only when a <see cref="HttpStatusCode.Forbidden"/> is handled.</param>
         /// <param name="objectResultTypeIfNotSupported">The type of the <see cref="ObjectResult"/> to convert to if the <see cref="HttpResponseMessage.StatusCode"/> of the specified <paramref name="message"/> if not managed.</param>
         /// <returns>
         /// An <see cref="IActionResult"/>:
@@ -32,8 +37,15 @@ namespace Sonata.Web.Extensions
         ///     - HttpStatusCode.OK
         ///     - HttpStatusCode.NotFound
         ///     - HttpStatusCode.Unauthorized
+        ///     - HttpStatusCode.Created
+        ///     - HttpStatusCode.NoContent
+        ///     - HttpStatusCode.Forbidden
         /// </remarks>
-        public static async Task<IActionResult> ToActionResultAsync(this HttpResponseMessage message, Type objectResultTypeIfNotSupported = null)
+        public static async Task<IActionResult> ToActionResultAsync(this HttpResponseMessage message,
+            Uri location = null,
+            List<string> authenticationSchemes = null,
+            AuthenticationProperties authenticationProperties = null,
+            Type objectResultTypeIfNotSupported = null)
         {
             if (message == null)
             {
@@ -47,6 +59,10 @@ namespace Sonata.Web.Extensions
             {
                 case HttpStatusCode.OK:
                     resultingObjectResult = new OkObjectResult(messageContent);
+                    break;
+
+                case HttpStatusCode.Created:
+                    resultingObjectResult = new CreatedResult(location, messageContent);
                     break;
 
                 case HttpStatusCode.NotFound:
@@ -68,6 +84,14 @@ namespace Sonata.Web.Extensions
                 case HttpStatusCode.Conflict:
                     resultingObjectResult = new ConflictObjectResult(messageContent);
                     break;
+
+                case HttpStatusCode.NoContent:
+                    return new NoContentResult();
+
+                case HttpStatusCode.Forbidden:
+                    var forbidResult = new ForbidResult(authenticationSchemes, authenticationProperties);
+
+                    return forbidResult;
 
                 default:
                     objectResultTypeIfNotSupported = objectResultTypeIfNotSupported ?? typeof(OkObjectResult);

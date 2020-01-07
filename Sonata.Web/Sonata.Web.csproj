@@ -13,9 +13,13 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>gaewynn sonata web</PackageTags>
     <NeutralLanguage>English (United States)</NeutralLanguage>
-    <Version>3.1.4</Version>
-    <AssemblyVersion>3.1.4.0</AssemblyVersion>
+    <Version>3.1.5</Version>
+    <AssemblyVersion>3.1.5.0</AssemblyVersion>
     <FileVersion>3.1.3.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Projects\_Private\Sonata\Sonata.Web\Sonata.Web\Sonata.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
