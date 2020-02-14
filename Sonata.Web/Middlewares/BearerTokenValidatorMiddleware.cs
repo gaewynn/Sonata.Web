@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Sonata.Web.Extensions;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,18 @@ namespace Sonata.Web.Middlewares
             }
             else
             {
-                var encodedToken = httpContext.Request.GetBearer();
+                string encodedToken = null;
+                if (httpContext.Request == null || httpContext.Request.Headers == null
+                    || String.IsNullOrEmpty(httpContext.Request.Headers["Authorization"])
+                    || !httpContext.Request.Headers["Authorization"].ToString().Trim().StartsWith("Bearer"))
+                {
+                    encodedToken = null;
+                }
+                else
+                {
+                    encodedToken = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer", String.Empty).Trim();
+                }
+
                 if (encodedToken == null)
                 {
                     if (_options.WriteErrorIfNoTokenFound)

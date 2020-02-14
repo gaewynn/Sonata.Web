@@ -1,0 +1,361 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sonata.Web</name>
+    </assembly>
+    <members>
+        <member name="M:Sonata.Web.Extensions.HttpClientExtension.UpdateDefaultRequestHeader(System.Net.Http.HttpClient,System.String,System.String)">
+            <summary>
+            Updates a default request header value on the specified <paramref name="instance"/>.
+            First, remove the header matching the specified <paramref name="headerName"/> and add it again with the new specified <paramref name="headerValue"/>
+            </summary>
+            <param name="instance">The instance of the <see cref="T:System.Net.Http.HttpClient"/> on which update the header value</param>
+            <param name="headerName">The name of the header to update.</param>
+            <param name="headerValue">The value of the header to update.</param>
+        </member>
+        <member name="M:Sonata.Web.Extensions.HttpResponseMessageExtension.ToActionResultAsync(System.Net.Http.HttpResponseMessage,System.Uri,System.Collections.Generic.List{System.String},Microsoft.AspNetCore.Authentication.AuthenticationProperties,System.Type)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>  from a <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+            <param name="message">The <see cref="T:System.Net.Http.HttpResponseMessage"/> to convert.</param>
+            <param name="location">The location of the created resource. This location is used only when a <see cref="F:System.Net.HttpStatusCode.Created"/> is handled.</param>
+            <param name="authenticationSchemes">The authentication schemes to challenge. This location is used only when a <see cref="F:System.Net.HttpStatusCode.Forbidden"/> is handled.</param>
+            <param name="authenticationProperties"><see cref="T:Microsoft.AspNetCore.Authentication.AuthenticationProperties"/> used to perform the authentication challenge. This location is used only when a <see cref="F:System.Net.HttpStatusCode.Forbidden"/> is handled.</param>
+            <param name="objectResultTypeIfNotSupported">The type of the <see cref="T:Microsoft.AspNetCore.Mvc.ObjectResult"/> to convert to if the <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> of the specified <paramref name="message"/> if not managed.</param>
+            <returns>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>:
+                - containing the stringified <see cref="P:System.Net.Http.HttpResponseMessage.Content"/> of the specified <paramref name="message"/>.
+                - having its <see cref="!:IActionResult.StatusCode"/> property set to the <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> of the specified <paramref name="message"/>.
+            </returns>
+            <remarks>
+            Only the following status codes are managed:
+                - HttpStatusCode.BadGateway
+                - HttpStatusCode.BadRequest
+                - HttpStatusCode.Conflict
+                - HttpStatusCode.OK
+                - HttpStatusCode.NotFound
+                - HttpStatusCode.Unauthorized
+                - HttpStatusCode.Created
+                - HttpStatusCode.NoContent
+                - HttpStatusCode.Forbidden
+            </remarks>
+        </member>
+        <member name="P:Sonata.Web.Filters.ModelValidatorActionFilter.Options">
+            <summary>
+            Gets or sets a value allowing to customize the <see cref="T:Sonata.Web.Filters.ModelValidatorActionFilter"/> behavior.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Filters.ModelValidatorActionFilter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Filters.ModelValidatorActionFilterOption"/> class.
+            </summary>
+        </member>
+        <member name="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.ResultingStatusCode">
+            <summary>
+            Gets or sets the <see cref="T:System.Net.HttpStatusCode"/> returned by the <see cref="T:Sonata.Web.Filters.ModelValidatorActionFilter"/> when the current <see cref="!:ActionExecutingContext.ModelState"/> id invalid
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.ResultingStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.BadRequest"/>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.IsValidationRunOnActionExecuting">
+            <summary>
+            Gets or sets a value indicating if the validation process has to be run during the <see cref="M:Microsoft.AspNetCore.Mvc.Filters.IActionFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)"/> execution.
+             - if <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.IsValidationRunOnActionExecuting"/> is <c>true</c>, the validation process will be run only during <see cref="M:Microsoft.AspNetCore.Mvc.Filters.IActionFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)"/> execution
+             - if <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.IsValidationRunOnActionExecuting"/> is <c>false</c> the validation process will be run only during <see cref="M:Microsoft.AspNetCore.Mvc.Filters.IActionFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)"/> execution
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.IsValidationRunOnActionExecuting"/> default value is set to <c>true</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateInvalid">
+            <summary>
+            Gets or sets a value indicating an <see cref="T:System.Action"/> to run once the valation process has finished only if the <see cref="!:ActionExecutingContext.ModelState"/> is invalid.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateInvalid"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateValid">
+            <summary>
+            Gets or sets a value indicating an <see cref="T:System.Action"/> to run once the valation process has finished only if the <see cref="!:ActionExecutedContext.ModelState"/> is invalid.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateValid"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="M:Sonata.Web.Filters.ModelValidatorActionFilterOption.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Filters.ModelValidatorActionFilterOption"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.ResultingStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.BadRequest"/>.
+                - The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.IsValidationRunOnActionExecuting"/> default value is set to <c>true</c>.
+                - The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateInvalid"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Filters.ModelValidatorActionFilterOption.OnModelStateValid"/> default value is set to <c>null</c>.
+            </remarks>
+        </member>
+        <member name="T:Sonata.Web.Http.FileActionResult">
+            <inheritdoc />
+            <summary>
+            Represents a components allowing to send a file back to the browser and so download the file.
+            </summary>
+        </member>
+        <member name="F:Sonata.Web.Http.FileActionResult.AttachmentContentDisposition">
+            <summary>
+            The header value to download a file as an attachment.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Http.FileActionResult.#ctor(System.String,System.IO.MemoryStream)">
+            <summary>
+            Initialize a new <see cref="T:Sonata.Web.Http.FileActionResult"/>.
+            </summary>
+            <param name="fileName">The name of the file which will be displayed to the user when downloading.</param>
+            <param name="stream">The content of the file to download.</param>
+        </member>
+        <member name="M:Sonata.Web.Http.FileActionResult.ExecuteResultAsync(Microsoft.AspNetCore.Mvc.ActionContext)">
+            <inheritdoc />
+            <summary>
+            Send the downloaded file back to the browser.
+            </summary>
+            <param name="context">The context in which the result is executed. The context information includes information about the action that was executed and request information.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task" /> that, when completed, contains the <see cref="T:System.Net.Http.HttpResponseMessage" /> with the downloaded file.</returns>
+        </member>
+        <member name="F:Sonata.Web.MediaTypeNames.ApplicationJson">
+            <summary>
+            Gets or sets the content type value for "Json" type
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Sonata.Web.Middlewares.BearerTokenValidatorMiddleware" -->
+        <member name="M:Sonata.Web.Middlewares.BearerTokenValidatorMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.BearerTokenValidatorMiddleware"/> class.
+            </summary>
+            <param name="next"></param>
+            <param name="options"><see cref="T:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions"/> to use to customize the current <see cref="T:Sonata.Web.Middlewares.BearerTokenValidatorMiddleware"/> behavior.</param>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.DoNotValidate">
+            <summary>
+            Gets or sets a value allowing to prevent the current <see cref="T:Sonata.Web.Middlewares.LoggingMiddleware"/> to validate the current <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.DoNotValidate"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.WriteErrorIfNoTokenFound" -->
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaims">
+            <summary>
+            Gets or sets a value indicating the mandatories claims that have to be in the bearer token of the current <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaims"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsErrorMessageBuilderAsync">
+            <summary>
+            Gets or sets a value allowing to customize the error message to write on the <see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/> if the claims is not found.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsErrorMessageBuilderAsync"/> default value is set to "'CLAIM_TYPE' not found".</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsRules">
+            <summary>
+            Gets or sets a value allowing to set custom rules to validate each claims on the current <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsRules"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MissingTokenMessageBuilderAsync">
+            <summary>
+            Gets or sets a value allowing to customize the returned error message if no toekn has been found in the current <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MissingTokenMessageBuilderAsync"/> default value is set to returned the following message: 'No token found'.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.CantReadTokenMessageBuilderAsync">
+            <summary>
+            Gets or sets a value allowing to customize the returned error message if the token is not readable in the current <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.CantReadTokenMessageBuilderAsync"/> default value is set to returned the following message: 'Invalid token found'.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseContentType">
+            <summary>
+            Gets or sets a value indicating the returned <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.ContentType"/> when an error is found on the token.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseContentType"/> default value is set to "application/json" (<see cref="!:MediaTypeNameApplicationJson)"/>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseStatusCode">
+            <summary>
+            Gets or sets a value indicating the returned <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.StatusCode"/> when an error is found on the token.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.Unauthorized"/>.</remarks>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.DoNotValidate"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.WriteErrorIfNoTokenFound"/> default value is set to <c>true</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaims"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsErrorMessageBuilderAsync"/> default value is set to "'CLAIM_TYPE' not found".
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MandatoriesClaimsRules"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.MissingTokenMessageBuilderAsync"/> default value is set to returned the following message: 'No token found'.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.CantReadTokenMessageBuilderAsync"/> default value is set to returned the following message: 'Invalid token found'.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseContentType"/> default value is set to "application/json" (<see cref="!:MediaTypeNames.ApplicationJson)"/>.
+                - The <see cref="P:Sonata.Web.Middlewares.BearerTokenValidatorMiddlewareOptions.ResponseStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.Unauthorized"/>.
+            </remarks>
+        </member>
+        <member name="T:Sonata.Web.Middlewares.ExceptionMiddleware">
+            <summary>
+            Reprsents a custom middleware allowing to handle all <see cref="T:System.Exception"/> thrown in a <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/> pipeline.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Sonata.Web.Middlewares.ExceptionMiddlewareOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ExceptionMiddleware"/> class.
+            </summary>
+            <param name="next"></param>
+            <param name="options"><see cref="T:Sonata.Web.Middlewares.ExceptionMiddlewareOptions"/> to use to customize the current <see cref="T:Sonata.Web.Middlewares.ExceptionMiddleware"/> behavior.</param>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.OnException">
+            <summary>
+            Gets or sets a value allowing to run a custom operation when an <see cref="T:System.Exception"/> is raised.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.OnException"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseContentType">
+            <summary>
+            Gets or sets a value indicating the returned <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.ContentType"/> when an <see cref="T:System.Exception"/> occured.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseContentType"/> default value is set to "application/json" (<see cref="!:MediaTypeNameApplicationJson)"/>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseStatusCode">
+            <summary>
+            Gets or sets a value indicating the returned <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.StatusCode"/> when an <see cref="T:System.Exception"/> occured.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.InternalServerError"/>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseMessageBuildder">
+            <summary>
+            Gets or sets a value allowing to customize the returned message when an <see cref="T:System.Exception"/> occured.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseMessageBuildder"/> default value is set to "Internal Server Error.".</remarks>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ExceptionMiddlewareOptions"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.OnException"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseContentType"/> default value is set to "application/json" (<see cref="!:MediaTypeNames.ApplicationJson)"/>.
+                - The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseStatusCode"/> default value is set to <see cref="F:System.Net.HttpStatusCode.InternalServerError"/>.
+                - The <see cref="P:Sonata.Web.Middlewares.ExceptionMiddlewareOptions.ResponseMessageBuildder"/> default value is set to "Internal Server Error.".
+            </remarks>
+        </member>
+        <member name="T:Sonata.Web.Middlewares.LoggingMiddleware">
+            <summary>
+            Reprsents a custom middleware allowing to trigger events to log <see cref="T:Microsoft.AspNetCore.Mvc.ControllerBase"/> actions.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.LoggingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Sonata.Web.Middlewares.LoggingMiddlewareOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.LoggingMiddleware"/> class.
+            </summary>
+            <param name="next"></param>
+            <param name="options"><see cref="T:Sonata.Web.Middlewares.LoggingMiddlewareOptions"/> to use to customize the current <see cref="T:Sonata.Web.Middlewares.LoggingMiddleware"/> behavior.</param>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.DoNotLog">
+            <summary>
+            Gets or sets a value allowing to prevent the current <see cref="T:Sonata.Web.Middlewares.LoggingMiddleware"/> to log.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.DoNotLog"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeRequestAsync">
+            <summary>
+            Gets or sets a value allowing to serialize the current <see cref="P:Microsoft.AspNetCore.Http.HttpContext.Request"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeRequestAsync"/> default value is set to return the request in the following format: "<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Method"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Scheme"/>://<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Host"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Path"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.QueryString"/> [Body: <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Body"/>]".</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeResponseAsync">
+            <summary>
+            Gets or sets a value allowing to serialize the current <see cref="P:Microsoft.AspNetCore.Http.HttpContext.Response"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeResponseAsync"/> default value is set to return the request in the following format: "<see cref="P:Microsoft.AspNetCore.Http.HttpResponse.StatusCode"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Method"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Scheme"/>://<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Host"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Path"/> [Body: <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.Body"/>]".</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.OnLogRequestAsync">
+            <summary>
+            Gets or sets a value allowing to run a custom logging process of the <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.OnLogRequestAsync"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.OnLogResponseAsync">
+            <summary>
+            Gets or sets a value allowing to run a custom logging process of the <see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/>.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.OnLogResponseAsync"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.LoggingMiddlewareOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.LoggingMiddlewareOptions"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.DoNotLog"/> default value is set to <c>null</c>.
+                - The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeRequestAsync"/> default value is set to return the request in the following format: "<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Method"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Scheme"/>://<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Host"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Path"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.QueryString"/> [Body: <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Body"/>]".
+                - The <see cref="P:Sonata.Web.Middlewares.LoggingMiddlewareOptions.SerializeResponseAsync"/> default value is set to return the request in the following format: "<see cref="P:Microsoft.AspNetCore.Http.HttpResponse.StatusCode"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Method"/> <see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Scheme"/>://<see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Host"/><see cref="P:Microsoft.AspNetCore.Http.HttpRequest.Path"/> [Body: <see cref="P:Microsoft.AspNetCore.Http.HttpResponse.Body"/>]".
+                - The <see cref="!:OnLogRequest"/> default value is set to <c>null</c>.
+                - The <see cref="!:OnLogResponse"/> default value is set to <c>null</c>.
+            </remarks>
+        </member>
+        <member name="T:Sonata.Web.Services.GlobalResult`1">
+            <summary>
+            Represents a component allowing to encapsulate a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> and a custom result depending on the needs.
+            </summary>
+            <typeparam name="TResult">The inner type encapsulated in the <see cref="!:GlobalResult"/>.</typeparam>
+        </member>
+        <member name="P:Sonata.Web.Services.GlobalResult`1.ErrorResult">
+            <summary>
+            Gets or sets the retrned result in case of error.
+            </summary>
+        </member>
+        <member name="P:Sonata.Web.Services.GlobalResult`1.OkResult">
+            <summary>
+            Gets or sets the retrned result in case of success.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Services.GlobalResult`1.#ctor(Microsoft.AspNetCore.Mvc.IActionResult)">
+            <summary>
+            Initialize a new indtance of the class <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.
+            </summary>
+            <param name="errorResult">The <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> that will be used to valorize the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> property.</param>
+        </member>
+        <member name="M:Sonata.Web.Services.GlobalResult`1.#ctor(`0)">
+            <summary>
+            Initialize a new indtance of the class <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.
+            </summary>
+            <param name="okResult">A value that will be used to valorize the <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> property.</param>
+        </member>
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ToActionResult">
+            <summary>
+            Gets either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/>.
+            </summary>
+            <returns>Either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/>.</returns>
+        </member>
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ToActionResult``1(System.Func{`0,``0})">
+            <summary>
+            Gets either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.
+            </summary>
+            <typeparam name="TDestination">The returned type of the <paramref name="map"/> function.</typeparam>
+            <param name="map">A function allowing to convert the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> into a <typeparamref name="TDestination"/> type.</param>
+            <returns>Either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.</returns>
+        </member>
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ReadAsync(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Reads the specified <paramref name="response"/> and convert it to a <see cref="T:Sonata.Web.Services.GlobalResult`1"/> based on the inner <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> and <see cref="P:System.Net.Http.HttpResponseMessage.Content"/>.
+            The returned <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> will contain:
+                - the <see cref="P:System.Net.Http.HttpResponseMessage.Content"/> if the specified <paramref name="response"/> has a <see cref="F:System.Net.HttpStatusCode.OK"/>
+                - <c>null</c> if the specified <paramref name="response"/> does not have a <see cref="F:System.Net.HttpStatusCode.OK"/>
+            The returned <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> will contain:
+                - <c>null</c> if the specified <paramref name="response"/> has a <see cref="F:System.Net.HttpStatusCode.OK"/>
+                - an <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> matching the <see cref="T:System.Net.HttpStatusCode"/> of the specified <paramref name="response"/>
+            </summary>
+            <param name="response">A <see cref="T:System.Net.Http.HttpResponseMessage"/> containig information that will be used to convert it in a <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.</param>
+            <returns>A <see cref="T:Sonata.Web.Services.GlobalResult`1"/> containing information about the specified <paramref name="response"/>.</returns>
+        </member>
+        <member name="M:Sonata.Web.WebProvider.Configure(System.Boolean)">
+            <summary>
+            Configures the behavior of the Sonata.Web library.
+            </summary>
+            <param name="enableTraces">true to enable debug traces; otherwise false.</param>
+        </member>
+    </members>
+</doc>
