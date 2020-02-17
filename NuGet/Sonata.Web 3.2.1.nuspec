@@ -22,5 +22,6 @@
   </metadata>
   <files>
     <file src=".\Sonata.Web\bin\$configuration$\netstandard2.0\Sonata.Web.dll" target="Sonata.Web.dll" />
+    <file src=".\Sonata.Web\bin\$configuration$\netstandard2.0\Sonata.Web.xml" target="Sonata.Web.xml" />
   </files>
 </package>

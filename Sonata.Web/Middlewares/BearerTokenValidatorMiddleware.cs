@@ -65,18 +65,7 @@ namespace Sonata.Web.Middlewares
             }
             else
             {
-                string encodedToken = null;
-                if (httpContext.Request == null || httpContext.Request.Headers == null
-                    || String.IsNullOrEmpty(httpContext.Request.Headers["Authorization"])
-                    || !httpContext.Request.Headers["Authorization"].ToString().Trim().StartsWith("Bearer"))
-                {
-                    encodedToken = null;
-                }
-                else
-                {
-                    encodedToken = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer", String.Empty).Trim();
-                }
-
+                var encodedToken = httpContext.Request.GetBearer();
                 if (encodedToken == null)
                 {
                     if (_options.WriteErrorIfNoTokenFound)

@@ -22,31 +22,25 @@ namespace Sonata.Web.Extensions
             if (instance == null)
                 return null;
 
-            if (!(instance is DefaultHttpRequest httpRequest))
-            {
-                WebProvider.Trace("		Invalid HTTP request.");
-                return null;
-            }
-
-            if (httpRequest.Headers == null)
+            if (instance.Headers == null)
             {
                 WebProvider.Trace("		No headers found in the HTTP request.");
                 return null;
             }
 
-            if (String.IsNullOrEmpty(httpRequest.Headers["Authorization"]))
+            if (String.IsNullOrEmpty(instance.Headers["Authorization"]))
             {
                 WebProvider.Trace("		No Authorization header provided.");
                 return null;
             }
 
-            if (!httpRequest.Headers["Authorization"].ToString().Trim().StartsWith("Bearer"))
+            if (!instance.Headers["Authorization"].ToString().Trim().StartsWith("Bearer"))
             {
                 WebProvider.Trace("		No Bearer token defined.");
                 return null;
             }
 
-            return httpRequest.Headers["Authorization"].ToString().Replace("Bearer", String.Empty).Trim();
+            return instance.Headers["Authorization"].ToString().Replace("Bearer", String.Empty).Trim();
         }
 
         public static string GetClaimFromBearerToken(this HttpRequest instance, string claimsType)
@@ -81,14 +75,14 @@ namespace Sonata.Web.Extensions
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            instance.EnableRewind();
+            instance.EnableBuffering();
             instance.Body.Position = 0;
             instance.Body.Seek(0, SeekOrigin.Begin);
 
             var streamReader = new StreamReader(instance.Body);
             var bodyAsText = await streamReader.ReadToEndAsync();
 
-            instance.EnableRewind();
+            instance.EnableBuffering();
             instance.Body.Position = 0;
             instance.Body.Seek(0, SeekOrigin.Begin);
 

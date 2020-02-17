@@ -13,8 +13,8 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>gaewynn sonata web</PackageTags>
     <NeutralLanguage>English (United States)</NeutralLanguage>
-    <Version>3.2.0</Version>
-    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <Version>3.2.1</Version>
+    <AssemblyVersion>3.2.1.0</AssemblyVersion>
     <FileVersion>3.2.0.0</FileVersion>
   </PropertyGroup>
 
