@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Sonata.Web.Extensions;
 using System;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,17 +19,24 @@ namespace Sonata.Web.Services
     /// <typeparam name="TResult">The inner type encapsulated in the <see cref="GlobalResult{TResult}"/>.</typeparam>
     public class GlobalResult<TResult>
     {
+        #region Members
+
+        private HttpResponseMessage _response;
+        private TResult _responseContent;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
-        /// Gets or sets the retrned result in case of error.
+        /// Gets or sets the returned result in case of error.
         /// </summary>
         public IActionResult ErrorResult { get; private set; }
 
         /// <summary>
-        /// Gets or sets the retrned result in case of success.
+        /// Gets or sets the returned result in case of success.
         /// </summary>
-        public TResult OkResult { get; private set; }
+        public TResult Content { get; private set; }
 
         #endregion
 
@@ -38,7 +46,7 @@ namespace Sonata.Web.Services
         /// Initialize a new indtance of the class <see cref="GlobalResult{TResult}"/>.
         /// </summary>
         /// <param name="errorResult">The <see cref="IActionResult"/> that will be used to valorize the <see cref="GlobalResult{TResult}.ErrorResult"/> property.</param>
-        public GlobalResult(IActionResult errorResult)
+        private GlobalResult(IActionResult errorResult)
         {
             ErrorResult = errorResult;
         }
@@ -46,10 +54,14 @@ namespace Sonata.Web.Services
         /// <summary>
         /// Initialize a new indtance of the class <see cref="GlobalResult{TResult}"/>.
         /// </summary>
-        /// <param name="okResult">A value that will be used to valorize the <see cref="GlobalResult{TResult}.OkResult"/> property.</param>
-        public GlobalResult(TResult okResult)
+        /// <param name="content">A value that will be used to valorize the <see cref="GlobalResult{TResult}.Content"/> property.</param>
+        /// <param name="response">The wrapped <see cref="HttpResponseMessage"/>.</param>
+        private GlobalResult(TResult content, HttpResponseMessage response = null)
         {
-            OkResult = okResult;
+            Content = content;
+
+            _response = response;
+            _responseContent = content;
         }
 
         #endregion
@@ -57,28 +69,81 @@ namespace Sonata.Web.Services
         #region Methods
 
         /// <summary>
-        /// Gets either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the current <see cref="GlobalResult{TResult}.OkResult"/>.
+        /// Gets either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the current <see cref="GlobalResult{TResult}.Content"/>.
         /// </summary>
-        /// <returns>Either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the current <see cref="GlobalResult{TResult}.OkResult"/>.</returns>
-        public IActionResult ToActionResult()
+        /// <param name="location">An expresion allowing to get the location of the created resource based on the response content: this location is only used when the wrapper <see cref="HttpResponseMessage.StatusCode"/> is <see cref="HttpStatusCode.Created"/>.</param>
+        /// <returns>Either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the current <see cref="GlobalResult{TResult}.Content"/>.</returns>
+        public IActionResult ToActionResult(Expression<Func<TResult, Uri>> location = null)
         {
-            return ErrorResult ?? new OkObjectResult(OkResult);
+            if (ErrorResult != null)
+            {
+                return ErrorResult;
+            }
+
+            if (_response == null)
+            {
+                return new OkObjectResult(Content);
+            }
+
+            switch (_response.StatusCode)
+            {
+                case HttpStatusCode.Created:
+                    return new CreatedResult(_responseContent == null ? null : location?.Compile()(_responseContent), Content);
+
+                case HttpStatusCode.NoContent:
+                    return new NoContentResult();
+
+                default:
+                    return new OkObjectResult(Content);
+            }
         }
 
         /// <summary>
         /// Gets either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.
         /// </summary>
         /// <typeparam name="TDestination">The returned type of the <paramref name="map"/> function.</typeparam>
-        /// <param name="map">A function allowing to convert the current <see cref="GlobalResult{TResult}.OkResult"/> into a <typeparamref name="TDestination"/> type.</param>
+        /// <param name="map">A function allowing to convert the current <see cref="GlobalResult{TResult}.Content"/> into a <typeparamref name="TDestination"/> type.</param>
+        /// <param name="location">An expresion allowing to get the location of the created resource based on the response content: this location is only used when the wrapper <see cref="HttpResponseMessage.StatusCode"/> is <see cref="HttpStatusCode.Created"/>.</param>
         /// <returns>Either the <see cref="GlobalResult{TResult}.ErrorResult"/> if not null: otherwise gets an <see cref="OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.</returns>
-        public IActionResult ToActionResult<TDestination>(Func<TResult, TDestination> map)
+        public IActionResult ToMappedActionResult<TDestination>(Func<TResult, TDestination> map, Expression<Func<TResult, Uri>> location = null)
         {
-            return ErrorResult ?? new OkObjectResult(map(OkResult));
+            if (ErrorResult != null)
+            {
+                return ErrorResult;
+            }
+
+            if (_response == null)
+            {
+                return new OkObjectResult(Content);
+            }
+
+            switch (_response.StatusCode)
+            {
+                case HttpStatusCode.Created:
+                    return new CreatedResult(_responseContent == null ? null : location?.Compile()(_responseContent), map(Content));
+
+                case HttpStatusCode.NoContent:
+                    return new NoContentResult();
+
+                default:
+                    return new OkObjectResult(map(Content));
+            }
+        }
+
+        /// <summary>
+        /// Instanciate a new <see cref="GlobalResult{TResult}"/> with its content.
+        /// Using this instanciation will result in a <see cref="OkObjectResult"/>.
+        /// </summary>
+        /// <param name="content">The content of the result.</param>
+        /// <returns></returns>
+        public static GlobalResult<TResult> Create(TResult content)
+        {
+            return new GlobalResult<TResult>(content);
         }
 
         /// <summary>
         /// Reads the specified <paramref name="response"/> and convert it to a <see cref="GlobalResult{TResult}"/> based on the inner <see cref="HttpResponseMessage.StatusCode"/> and <see cref="HttpResponseMessage.Content"/>.
-        /// The returned <see cref="GlobalResult{TResult}.OkResult"/> will contain:
+        /// The returned <see cref="GlobalResult{TResult}.Content"/> will contain:
         ///     - the <see cref="HttpResponseMessage.Content"/> if the specified <paramref name="response"/> has a <see cref="HttpStatusCode.OK"/>
         ///     - <c>null</c> if the specified <paramref name="response"/> does not have a <see cref="HttpStatusCode.OK"/>
         /// The returned <see cref="GlobalResult{TResult}.ErrorResult"/> will contain:
@@ -103,7 +168,7 @@ namespace Sonata.Web.Services
             {
                 return response.Content == null
                     ? new GlobalResult<TResult>(null)
-                    : new GlobalResult<TResult>(JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync()));
+                    : new GlobalResult<TResult>(JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync()), response);
             }
 
             return new GlobalResult<TResult>(await response.ToActionResultAsync());

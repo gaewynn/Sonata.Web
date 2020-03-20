@@ -300,7 +300,7 @@
             <summary>
             Represents a component allowing to encapsulate a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> and a custom result depending on the needs.
             </summary>
-            <typeparam name="TResult">The inner type encapsulated in the <see cref="!:GlobalResult"/>.</typeparam>
+            <typeparam name="TResult">The inner type encapsulated in the <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.</typeparam>
         </member>
         <member name="P:Sonata.Web.Services.GlobalResult`1.ErrorResult">
             <summary>
@@ -318,19 +318,19 @@
             </summary>
             <param name="errorResult">The <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> that will be used to valorize the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> property.</param>
         </member>
-        <member name="M:Sonata.Web.Services.GlobalResult`1.#ctor(`0)">
+        <member name="M:Sonata.Web.Services.GlobalResult`1.#ctor(`0,System.Net.Http.HttpResponseMessage)">
             <summary>
             Initialize a new indtance of the class <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.
             </summary>
             <param name="okResult">A value that will be used to valorize the <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> property.</param>
         </member>
-        <member name="M:Sonata.Web.Services.GlobalResult`1.ToActionResult">
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ToActionResult(System.Linq.Expressions.Expression{System.Func{`0,System.Uri}})">
             <summary>
             Gets either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/>.
             </summary>
             <returns>Either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/>.</returns>
         </member>
-        <member name="M:Sonata.Web.Services.GlobalResult`1.ToActionResult``1(System.Func{`0,``0})">
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ToMappedActionResult``1(System.Func{`0,``0},System.Linq.Expressions.Expression{System.Func{`0,System.Uri}})">
             <summary>
             Gets either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.
             </summary>
@@ -338,7 +338,7 @@
             <param name="map">A function allowing to convert the current <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> into a <typeparamref name="TDestination"/> type.</param>
             <returns>Either the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> if not null: otherwise gets an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> containing the result of the transformation defined my the specified <paramref name="map"/> function.</returns>
         </member>
-        <member name="M:Sonata.Web.Services.GlobalResult`1.ReadAsync(System.Net.Http.HttpResponseMessage)">
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ReadAsync(System.Net.Http.HttpResponseMessage,System.Func{System.Net.Http.HttpResponseMessage,System.Boolean})">
             <summary>
             Reads the specified <paramref name="response"/> and convert it to a <see cref="T:Sonata.Web.Services.GlobalResult`1"/> based on the inner <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> and <see cref="P:System.Net.Http.HttpResponseMessage.Content"/>.
             The returned <see cref="P:Sonata.Web.Services.GlobalResult`1.OkResult"/> will contain:
@@ -349,6 +349,10 @@
                 - an <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> matching the <see cref="T:System.Net.HttpStatusCode"/> of the specified <paramref name="response"/>
             </summary>
             <param name="response">A <see cref="T:System.Net.Http.HttpResponseMessage"/> containig information that will be used to convert it in a <see cref="T:Sonata.Web.Services.GlobalResult`1"/>.</param>
+            <param name="shouldBeAnErrorResult">
+            A function returning if the <paramref name="response"/> content should be coonsider as an error. 
+            In such case, the <see cref="P:Sonata.Web.Services.GlobalResult`1.ErrorResult"/> will be filled.
+            In <paramref name="shouldBeAnErrorResult"/> is null, a success will be considered if the <paramref name="response"/> HTTP status code is between 200 and 299 included.</param>
             <returns>A <see cref="T:Sonata.Web.Services.GlobalResult`1"/> containing information about the specified <paramref name="response"/>.</returns>
         </member>
         <member name="M:Sonata.Web.WebProvider.Configure(System.Boolean)">
