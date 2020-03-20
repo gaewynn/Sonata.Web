@@ -114,7 +114,7 @@ namespace Sonata.Web.Services
 
             if (_response == null)
             {
-                return new OkObjectResult(Content);
+                return new OkObjectResult(map(Content));
             }
 
             switch (_response.StatusCode)
