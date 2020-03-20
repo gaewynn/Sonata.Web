@@ -158,7 +158,7 @@ namespace Sonata.Web.Services
         /// <returns>A <see cref="GlobalResult{TResult}"/> containing information about the specified <paramref name="response"/>.</returns>
         public static async Task<GlobalResult<TResult>> ReadAsync(HttpResponseMessage response, Func<HttpResponseMessage, bool> shouldBeAnErrorResult = null)
         {
-            var isAnErrorResult = (int)response.StatusCode < 200 && (int)response.StatusCode >= 300;
+            var isAnErrorResult = (int)response.StatusCode < 200 || (int)response.StatusCode >= 300;
             if (shouldBeAnErrorResult != null)
             {
                 isAnErrorResult = shouldBeAnErrorResult(response);
