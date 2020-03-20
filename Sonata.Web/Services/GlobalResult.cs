@@ -15,7 +15,7 @@ namespace Sonata.Web.Services
     /// <summary>
     /// Represents a component allowing to encapsulate a <see cref="IActionResult"/> and a custom result depending on the needs.
     /// </summary>
-    /// <typeparam name="TResult">The inner type encapsulated in the <see cref="GlobalResult"/>.</typeparam>
+    /// <typeparam name="TResult">The inner type encapsulated in the <see cref="GlobalResult{TResult}"/>.</typeparam>
     public class GlobalResult<TResult>
     {
         #region Properties
@@ -86,10 +86,20 @@ namespace Sonata.Web.Services
         ///     - an <see cref="IActionResult"/> matching the <see cref="HttpStatusCode"/> of the specified <paramref name="response"/>
         /// </summary>
         /// <param name="response">A <see cref="HttpResponseMessage"/> containig information that will be used to convert it in a <see cref="GlobalResult{TResult}"/>.</param>
+        /// <param name="shouldBeAnErrorResult">
+        /// A function returning if the <paramref name="response"/> content should be coonsider as an error. 
+        /// In such case, the <see cref="GlobalResult{TResult}.ErrorResult"/> will be filled.
+        /// In <paramref name="shouldBeAnErrorResult"/> is null, a success will be considered if the <paramref name="response"/> HTTP status code is between 200 and 299 included.</param>
         /// <returns>A <see cref="GlobalResult{TResult}"/> containing information about the specified <paramref name="response"/>.</returns>
-        public static async Task<GlobalResult<TResult>> ReadAsync(HttpResponseMessage response)
+        public static async Task<GlobalResult<TResult>> ReadAsync(HttpResponseMessage response, Func<HttpResponseMessage, bool> shouldBeAnErrorResult = null)
         {
-            if (response.StatusCode == HttpStatusCode.OK)
+            var isAnErrorResult = (int)response.StatusCode < 200 && (int)response.StatusCode >= 300;
+            if (shouldBeAnErrorResult != null)
+            {
+                isAnErrorResult = shouldBeAnErrorResult(response);
+            }
+
+            if (!isAnErrorResult)
             {
                 return response.Content == null
                     ? new GlobalResult<TResult>(null)
