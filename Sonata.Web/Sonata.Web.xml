@@ -38,6 +38,7 @@
                 - HttpStatusCode.Created
                 - HttpStatusCode.NoContent
                 - HttpStatusCode.Forbidden
+                - UnprocessableEntity (422)
             </remarks>
         </member>
         <member name="P:Sonata.Web.Filters.ModelValidatorActionFilter.Options">

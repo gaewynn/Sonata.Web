@@ -40,6 +40,7 @@ namespace Sonata.Web.Extensions
         ///     - HttpStatusCode.Created
         ///     - HttpStatusCode.NoContent
         ///     - HttpStatusCode.Forbidden
+        ///     - UnprocessableEntity (422)
         /// </remarks>
         public static async Task<IActionResult> ToActionResultAsync(this HttpResponseMessage message,
             Uri location = null,
@@ -90,15 +91,22 @@ namespace Sonata.Web.Extensions
 
                 case HttpStatusCode.Forbidden:
                     var forbidResult = new ForbidResult(authenticationSchemes, authenticationProperties);
-
+                    
                     return forbidResult;
 
                 default:
-                    objectResultTypeIfNotSupported = objectResultTypeIfNotSupported ?? typeof(OkObjectResult);
-                    resultingObjectResult = Activator.CreateInstance(objectResultTypeIfNotSupported) as ObjectResult;
-                    if (resultingObjectResult != null)
+                    if ((int)message.StatusCode == 422)
                     {
-                        resultingObjectResult.Value = messageContent;
+                        resultingObjectResult = new UnprocessableEntityObjectResult(messageContent);
+                    }
+                    else
+                    {
+                        objectResultTypeIfNotSupported = objectResultTypeIfNotSupported ?? typeof(OkObjectResult);
+                        resultingObjectResult = Activator.CreateInstance(objectResultTypeIfNotSupported) as ObjectResult;
+                        if (resultingObjectResult != null)
+                        {
+                            resultingObjectResult.Value = messageContent;
+                        }
                     }
                     break;
             }
