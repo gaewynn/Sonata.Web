@@ -69,12 +69,7 @@ namespace Sonata.Web.Middlewares
             context.Response.ContentType = _options.ResponseContentType;
             context.Response.StatusCode = (int)_options.ResponseStatusCode;
 
-            return context.Response.WriteAsync(new
-            {
-                StatusCode = (int)_options.ResponseStatusCode,
-                Message = _options.ResponseMessageBuildder(exception)
-
-            }.ToString());
+            return context.Response.WriteAsync(_options.ResponseMessageBuildder(exception));
         }
 
         #endregion
