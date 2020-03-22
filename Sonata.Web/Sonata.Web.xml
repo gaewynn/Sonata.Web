@@ -297,6 +297,68 @@
                 - The <see cref="!:OnLogResponse"/> default value is set to <c>null</c>.
             </remarks>
         </member>
+        <member name="T:Sonata.Web.Middlewares.ResponseHeaderMiddleware">
+            <summary>
+            Reprsents a custom middleware allowing to add custome headers to the HTTP Response.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ResponseHeaderMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ResponseHeaderMiddleware"/> class.
+            </summary>
+            <param name="next"></param>
+            <param name="options"><see cref="T:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions"/> to use to customize the current <see cref="T:Sonata.Web.Middlewares.ResponseHeaderMiddleware"/> behavior.</param>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions.Headers">
+            <summary>
+            Gets or sets a value allowing to set custom headers to add to the current HTTP Response.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions.Headers"/> default value is set to <c>null</c>.</remarks>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Middlewares.ResponseHeaderMiddlewareOptions.Headers"/> default value is set to <c>null</c>.
+            </remarks>
+        </member>
+        <member name="T:Sonata.Web.Middlewares.ServerTimingMiddleware">
+            <summary>
+            Reprsents a custom middleware allowing to trace the time to process the current HTTP Request.
+            The Server Timing will be added to the current "Server-Timing" HTTP Response header.
+            </summary>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ServerTimingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Sonata.Web.Middlewares.ServerTimingMiddlewareOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ServerTimingMiddleware"/> class.
+            </summary>
+            <param name="next"></param>
+            <param name="options"><see cref="T:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions"/> to use to customize the current <see cref="T:Sonata.Web.Middlewares.ServerTimingMiddleware"/> behavior.</param>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.ServerTimingHeaderName">
+            <summary>
+            Gets or sets a value indicating the name of the header that will be added to the current HTTP Response.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.ServerTimingHeaderName"/> default value is set to "Server-Timing" (according to the W3C: https://www.w3.org/TR/server-timing/).</remarks>
+        </member>
+        <member name="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.AdditionalDescriptors">
+            <summary>
+            Gets or sets a value allowing to put additional <see cref="T:Sonata.Web.Middlewares.ServerTimingDescriptor"/> to the current HTTP Response header.
+            </summary>
+            <remarks>The <see cref="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.ServerTimingHeaderName"/> default value is set to <c>null</c></remarks>
+        </member>
+        <member name="M:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions"/> class.
+            </summary>
+            <remarks>
+            By default:
+                - The <see cref="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.ServerTimingHeaderName"/> default value is set to "Server-Timing".
+                - The <see cref="P:Sonata.Web.Middlewares.ServerTimingMiddlewareOptions.AdditionalDescriptors"/> default value is set to <c>null</c>.
+            </remarks>
+        </member>
         <member name="T:Sonata.Web.Services.GlobalResult`1">
             <summary>
             Represents a component allowing to encapsulate a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> and a custom result depending on the needs.

@@ -8,7 +8,7 @@ using Sonata.Web.Extensions;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Internal;
+
 namespace Sonata.Web.Middlewares
 {
     public static class LoggingMiddlewareExtensions

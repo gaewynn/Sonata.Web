@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.2</TargetFramework>
     <Authors>gaewynn</Authors>
     <Company>Sonata</Company>
     <Description>Sonata.Web</Description>
@@ -13,9 +13,9 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>gaewynn sonata web</PackageTags>
     <NeutralLanguage>English (United States)</NeutralLanguage>
-    <Version>3.2.7</Version>
-    <AssemblyVersion>3.2.7.0</AssemblyVersion>
-    <FileVersion>3.2.7.0</FileVersion>
+    <Version>3.2.8</Version>
+    <AssemblyVersion>3.2.8.0</AssemblyVersion>
+    <FileVersion>3.2.8.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

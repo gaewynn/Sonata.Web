@@ -4,7 +4,6 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Sonata.Web.Extensions;
 using System;
 using System.Collections.Generic;
