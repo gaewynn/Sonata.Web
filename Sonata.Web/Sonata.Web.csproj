@@ -13,9 +13,9 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>gaewynn sonata web</PackageTags>
     <NeutralLanguage>English (United States)</NeutralLanguage>
-    <Version>3.2.8</Version>
-    <AssemblyVersion>3.2.8.0</AssemblyVersion>
-    <FileVersion>3.2.8.0</FileVersion>
+    <Version>3.2.9</Version>
+    <AssemblyVersion>3.2.9.0</AssemblyVersion>
+    <FileVersion>3.2.9.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

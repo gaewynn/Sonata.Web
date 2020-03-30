@@ -412,7 +412,7 @@
             <param name="content">The content of the result.</param>
             <returns></returns>
         </member>
-        <member name="M:Sonata.Web.Services.GlobalResult`1.ReadAsync(System.Net.Http.HttpResponseMessage,System.Func{System.Net.Http.HttpResponseMessage,System.Boolean})">
+        <member name="M:Sonata.Web.Services.GlobalResult`1.ReadAsync(System.Net.Http.HttpResponseMessage,System.Func{System.Net.Http.HttpResponseMessage,System.Boolean},System.Func{System.Net.Http.HttpResponseMessage,System.Threading.Tasks.Task})">
             <summary>
             Reads the specified <paramref name="response"/> and convert it to a <see cref="T:Sonata.Web.Services.GlobalResult`1"/> based on the inner <see cref="P:System.Net.Http.HttpResponseMessage.StatusCode"/> and <see cref="P:System.Net.Http.HttpResponseMessage.Content"/>.
             The returned <see cref="P:Sonata.Web.Services.GlobalResult`1.Content"/> will contain:

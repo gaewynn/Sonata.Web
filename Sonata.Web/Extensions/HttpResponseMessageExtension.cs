@@ -90,9 +90,10 @@ namespace Sonata.Web.Extensions
                     return new NoContentResult();
 
                 case HttpStatusCode.Forbidden:
-                    var forbidResult = new ForbidResult(authenticationSchemes, authenticationProperties);
-                    
-                    return forbidResult;
+                    return new ForbidResult(authenticationSchemes, authenticationProperties);
+
+                case HttpStatusCode.InternalServerError:
+                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
 
                 default:
                     if ((int)message.StatusCode == 422)

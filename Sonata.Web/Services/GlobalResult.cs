@@ -156,8 +156,10 @@ namespace Sonata.Web.Services
         /// In such case, the <see cref="GlobalResult{TResult}.ErrorResult"/> will be filled.
         /// In <paramref name="shouldBeAnErrorResult"/> is null, a success will be considered if the <paramref name="response"/> HTTP status code is between 200 and 299 included.</param>
         /// <returns>A <see cref="GlobalResult{TResult}"/> containing information about the specified <paramref name="response"/>.</returns>
-        public static async Task<GlobalResult<TResult>> ReadAsync(HttpResponseMessage response, Func<HttpResponseMessage, bool> shouldBeAnErrorResult = null)
+        public static async Task<GlobalResult<TResult>> ReadAsync(HttpResponseMessage response, Func<HttpResponseMessage, bool> shouldBeAnErrorResult = null, Func<HttpResponseMessage, Task> logResponseAsync = null)
         {
+            await logResponseAsync?.Invoke(response);
+
             var isAnErrorResult = (int)response.StatusCode < 200 || (int)response.StatusCode >= 300;
             if (shouldBeAnErrorResult != null)
             {
